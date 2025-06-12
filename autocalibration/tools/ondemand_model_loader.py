@@ -17,9 +17,11 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 # Model configuration
+MINIMAL_MODEL_SIZE_MB = 500
 NETVLAD_MODEL_URL = "https://cvg-data.inf.ethz.ch/hloc/netvlad/Pitts30K_struct.mat"
 NETVLAD_MODEL_NAME = "VGG16-NetVLAD-Pitts30K.mat"
 MODEL_DIR = os.getenv("NETVLAD_MODEL_DIR", "/models/netvlad")
+NETVLAD_MODEL_MIN_SIZE_MB = MINIMAL_MODEL_SIZE_MB
 
 def get_model_path() -> Path:
     """Get the full path to the NetVLAD model file."""
@@ -108,7 +110,7 @@ def check_model_integrity(model_path: Path) -> bool:
             
         # Check file size (should be around 554MB)
         file_size = model_path.stat().st_size
-        if file_size < 500 * 1024 * 1024:  # Less than 500MB
+        if file_size < NETVLAD_MODEL_MIN_SIZE_MB * 1024 * 1024:
             logger.warning(f"Model file seems too small: {file_size} bytes")
             return False
             
