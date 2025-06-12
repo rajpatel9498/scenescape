@@ -102,16 +102,15 @@ COPY --from=camcalibration-builder /usr/local/lib/python3.10/dist-packages/scene
 # Copy AprilTag shared library
 COPY --from=camcalibration-builder /tmp/apriltag_build/libapriltag.so /usr/local/lib/python3.10/site-packages/dt_apriltags/
 
-# Install Python packages (these change more frequently)
+# Install Python packages in one layer
 COPY autocalibration/requirements-runtime.txt /tmp/
+COPY autocalibration/ondemand_model_loader.py /usr/local/bin/download_models.py
 RUN --mount=type=cache,target=/root/.cache/pip \
-    pip install \
+    pip install --no-cache-dir \
     --extra-index-url https://download.pytorch.org/whl/cpu \
     -r /tmp/requirements-runtime.txt && \
+    chmod +x /usr/local/bin/download_models.py && \
     rm -rf /tmp/requirements-runtime.txt
-
-COPY autocalibration/ondemand_model_loader.py /usr/local/bin/download_models.py
-RUN chmod +x /usr/local/bin/download_models.py
 
 # Copy built wheels and install them
 COPY --from=camcalibration-builder /output/*.whl /tmp/

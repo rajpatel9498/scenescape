@@ -6,8 +6,8 @@ kornia
 kubernetes
 numpy>=1.16.6,<=1.26.4
 onvif-zeep
-open3d-cpu
-opencv-python
+open3d-cpu[headless]
+opencv-python-headless
 paho-mqtt
 pillow
 pyyaml

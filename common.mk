@@ -14,6 +14,11 @@ VERSION:=$(shell cat ../version.txt)
 BUILD_DIR ?= $(PWD)/build
 LOG_FILE := $(BUILD_DIR)/$(IMAGE).log
 
+# Default values for optional variables
+CERTDOMAIN ?= scenescape.intel.com
+FORCE_VAAPI ?= 0
+BASE_OS_IMAGE ?= $(RUNTIME_OS_IMAGE)
+
 $(shell mkdir -p $(BUILD_DIR))
 
 # ANSI color codes
@@ -30,6 +35,7 @@ build-image: Dockerfile
 	    set -o pipefail; \
 	    if env BUILDKIT_PROGRESS=plain docker build $(REBUILDFLAGS) \
 	        --build-arg RUNTIME_OS_IMAGE=$(RUNTIME_OS_IMAGE) \
+	        --build-arg BASE_OS_IMAGE=$(BASE_OS_IMAGE) \
 	        --build-arg http_proxy=$(http_proxy) \
 	        --build-arg https_proxy=$(https_proxy) \
 	        --build-arg no_proxy=$(no_proxy) \
