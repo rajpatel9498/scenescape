@@ -11,14 +11,14 @@
 # This software and the related documents are provided as is, with no express
 # or implied warranties, other than those that are expressly stated in the License.
 
-FROM openvino/ubuntu22_dev:2025.1.0
+FROM openvino/ubuntu22_dev:2024.6.0
 
 USER root
 
 SHELL ["/bin/bash", "-e", "-o", "pipefail", "-c"]
 
-COPY ./docker/requirements-model-installer.txt /tmp
+COPY ./model_installer/requirements-runtime.txt /tmp
 RUN : \
-    ; pip install -r /tmp/requirements-model-installer.txt \
-    ; rm -rf /tmp/requirements-model-installer.txt \
+    ; pip install -r /tmp/requirements-runtime.txt \
+    ; rm -rf /tmp/requirements-runtime.txt \
     ;
