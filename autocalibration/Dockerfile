@@ -65,7 +65,7 @@ RUN --mount=type=cache,target=/root/.cache/pip \
 # STAGE 2: RUNTIME STAGE
 # =========================
 # Runtime stage
-FROM python:3.10-slim AS runtime
+FROM ubuntu:22.04 AS camcalibration-runtime
 
 # Define environment variables first
 ARG USER_ID
@@ -82,7 +82,7 @@ ENV NETVLAD_MODEL_DIR="/models/netvlad"
 RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     --mount=type=cache,target=/var/lib/apt,sharing=locked \
     apt-get update && apt-get install -y --no-install-recommends \
-    bindfs sudo libgl1 libglib2.0-0 libgomp1 wget && \
+    bindfs sudo libgl1 libglib2.0-0 libgomp1 python3 python3-pip wget && \
     rm -rf /var/lib/apt/lists/* && \
     apt-get clean
 
