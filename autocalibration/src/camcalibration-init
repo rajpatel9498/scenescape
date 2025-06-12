@@ -136,6 +136,10 @@ if [ ${START_CAMCALIB} = 1 ] ; then
     BROKERAUTH=${BROKERAUTH:-${RUNSECRETS}/calibration.auth}
     RESTAUTH=${RESTAUTH:-${RUNSECRETS}/calibration.auth}
 
+    # Download NetVLAD model if needed
+    echo "Checking NetVLAD model..."
+    sudo -u ${WSUSER} -E /usr/local/bin/download_models.py
+
     map_dir "${DBROOT}/media" "${SSCAPEDIR}/media"
     chown -R "${WSUSER}.${WSUSER}" "${DBROOT}/datasets"
     map_dir "${DBROOT}/datasets" "${SSCAPEDIR}/datasets"

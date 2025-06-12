@@ -332,9 +332,11 @@ services:
     environment:
      - EGL_PLATFORM=surfaceless
      - "DBROOT"
+     - NETVLAD_MODEL_DIR=/models/netvlad
     volumes:
      - ./media:/workspace/media
      - ./datasets:/workspace/datasets
+     - netvlad_models:/models/netvlad
     secrets:
       - source: root-cert
         target: certs/scenescape-ca.pem
@@ -352,3 +354,7 @@ services:
   #    - ./models/ovms-config.json:/opt/ml/ovms-config.json
   #    - ./models:/models
   #   restart: always
+
+volumes:
+  netvlad_models:
+    driver: local
