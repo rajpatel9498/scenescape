@@ -38,7 +38,6 @@ build-image: $(BUILD_DIR) Dockerfile
 	    set -o pipefail; \
 	    if env BUILDKIT_PROGRESS=plain docker build $(REBUILDFLAGS) \
 	        --build-arg RUNTIME_OS_IMAGE=$(RUNTIME_OS_IMAGE) \
-	        --build-arg BASE_OS_IMAGE=$(BASE_OS_IMAGE) \
 	        --build-arg http_proxy=$(http_proxy) \
 	        --build-arg https_proxy=$(https_proxy) \
 	        --build-arg no_proxy=$(no_proxy) \
