@@ -101,10 +101,12 @@ COPY --from=camcalibration-builder /usr/local/lib/python3.10/dist-packages/scene
 
 # Copy AprilTag shared library
 COPY --from=camcalibration-builder /tmp/apriltag_build/libapriltag.so /usr/local/lib/python3.10/site-packages/dt_apriltags/
+RUN mkdir -p /usr/local/lib/python3.10/dist-packages/dt_apriltags/ && \
+    cp /usr/local/lib/python3.10/site-packages/dt_apriltags/libapriltag.so /usr/local/lib/python3.10/dist-packages/dt_apriltags/
 
 # Install Python packages in one layer
 COPY autocalibration/requirements-runtime.txt /tmp/
-COPY autocalibration/ondemand_model_loader.py /usr/local/bin/download_models.py
+COPY autocalibration/tools/ondemand_model_loader.py /usr/local/bin/download_models.py
 RUN --mount=type=cache,target=/root/.cache/pip \
     pip install --no-cache-dir \
     --extra-index-url https://download.pytorch.org/whl/cpu \
