@@ -127,11 +127,15 @@ COPY autocalibration/src/*.py $SCENESCAPE_HOME/
 COPY autocalibration/src/camcalibration-init /usr/local/bin/
 RUN chmod +x /usr/local/bin/camcalibration-init
 
-# Create a startup script that ensures model directory permissions
+# Create a startup script that ensures model directory permissions and checks NetVLAD model
 RUN echo '#!/bin/bash\n\
-# Ensure model directory has correct permissions\n\
+set -e\n\
+\n# Ensure model directory has correct permissions\n\
 chown -R $WSUSER:$WSUSER $NETVLAD_MODEL_DIR\n\
-exec "$@"' > /usr/local/bin/startup.sh && \
-    chmod +x /usr/local/bin/startup.sh
+\n# Check/download NetVLAD model before starting the main service\n\
+echo "Checking NetVLAD model..."\n\
+python3 /usr/local/bin/download_models.py\n\
+\n# Start the main service (pass all arguments)\n\
+exec "$@"\n' > /usr/local/bin/startup.sh && chmod +x /usr/local/bin/startup.sh
 
 ENTRYPOINT ["/usr/local/bin/startup.sh", "/usr/local/bin/camcalibration-init"] 
