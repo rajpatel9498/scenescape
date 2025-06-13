@@ -138,4 +138,4 @@ python3 /usr/local/bin/download_models.py\n\
 \n# Start the main service (pass all arguments)\n\
 exec "$@"\n' > /usr/local/bin/startup.sh && chmod +x /usr/local/bin/startup.sh
 
-ENTRYPOINT ["/usr/local/bin/startup.sh", "/usr/local/bin/camcalibration-init"] 
+ENTRYPOINT ["/usr/local/bin/startup.sh", "/usr/local/bin/camcalibration-init"]
