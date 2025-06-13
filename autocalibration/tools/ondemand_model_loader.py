@@ -20,7 +20,7 @@ logger = logging.getLogger(__name__)
 MINIMAL_MODEL_SIZE_MB = 500
 NETVLAD_MODEL_URL = "https://cvg-data.inf.ethz.ch/hloc/netvlad/Pitts30K_struct.mat"
 NETVLAD_MODEL_NAME = "VGG16-NetVLAD-Pitts30K.mat"
-MODEL_DIR = os.getenv("NETVLAD_MODEL_DIR", "/models/netvlad")
+MODEL_DIR = os.getenv("NETVLAD_MODEL_DIR", "/usr/local/lib/python3.10/dist-packages/third_party/netvlad")
 NETVLAD_MODEL_MIN_SIZE_MB = MINIMAL_MODEL_SIZE_MB
 
 def get_model_path() -> Path:

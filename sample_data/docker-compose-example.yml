@@ -279,11 +279,11 @@ services:
     environment:
      - EGL_PLATFORM=surfaceless
      - "DBROOT"
-     - NETVLAD_MODEL_DIR=/models/netvlad
+     - NETVLAD_MODEL_DIR=/usr/local/lib/python3.10/dist-packages/third_party/netvlad
     volumes:
      - vol-media:/workspace/media
      - vol-datasets:/workspace/datasets
-     - netvlad_models:/models/netvlad
+     - vol-netvlad_models:/usr/local/lib/python3.10/dist-packages/third_party/netvlad
     secrets:
       - source: root-cert
         target: certs/scenescape-ca.pem
