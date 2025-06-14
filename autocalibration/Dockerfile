@@ -130,12 +130,9 @@ RUN chmod +x /usr/local/bin/camcalibration-init
 # Create a startup script that ensures model directory permissions and checks NetVLAD model
 RUN echo '#!/bin/bash\n\
 set -e\n\
-\n# Ensure model directory has correct permissions\n\
 chown -R $WSUSER:$WSUSER $NETVLAD_MODEL_DIR\n\
-\n# Check/download NetVLAD model before starting the main service\n\
 echo "Checking NetVLAD model..."\n\
 python3 /usr/local/bin/download_models.py\n\
-\n# Start the main service (pass all arguments)\n\
 exec "$@"\n' > /usr/local/bin/startup.sh && chmod +x /usr/local/bin/startup.sh
 
 ENTRYPOINT ["/usr/local/bin/startup.sh", "/usr/local/bin/camcalibration-init"]
